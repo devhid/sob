@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-class AuthRouter {
+class IndexRouter {
     constructor() {
         this.router = express_1.Router();
         this.init();
     }
-    authorize(req, res, next) {
-        res.send({ message: 'Authorized.' });
+    getDefault(req, res, next) {
+        res.json({ message: 'Successful.' });
     }
     init() {
-        this.router.get('/', this.authorize);
+        this.router.get('/', this.getDefault);
     }
 }
-exports.AuthRouter = AuthRouter;
-exports.default = new AuthRouter().router;
+exports.IndexRouter = IndexRouter;
+exports.default = new IndexRouter().router;

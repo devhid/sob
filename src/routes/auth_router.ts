@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction, Router } from 'express';
+import IRouter from './i_router';
 
-export class AuthRouter {
+export class AuthRouter implements IRouter {
     router: Router;
 
     constructor() {
@@ -17,6 +18,4 @@ export class AuthRouter {
     }
 }
 
-const authRouter = new AuthRouter();
-
-export default authRouter.router;
+export default new AuthRouter().router;

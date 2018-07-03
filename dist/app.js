@@ -5,6 +5,7 @@ const express = require("express");
 const logger = require("morgan");
 const bodyParser = require("body-parser");
 /* Internal Imports */
+const index_router_1 = require("./routes/index_router");
 const auth_router_1 = require("./routes/auth_router");
 /* The port the server will listen on. */
 const PORT = 3000;
@@ -23,6 +24,7 @@ class SOB {
     }
     // Configure API endpoints (routing).
     routes() {
+        this.app.use('/', index_router_1.default);
         this.app.use('/auth', auth_router_1.default);
     }
     // Start the server.
