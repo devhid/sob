@@ -1,12 +1,12 @@
 /* External Imports */
 import { Request, Response, NextFunction, Router } from 'express';
-import request from 'request';
+import request = require('request');
 
 /* Internal Imports */
-import IRouter from '../i_router';
-import auth = require('../../auth_info');
+import IRouter from './i_router';
+import auth = require('../auth_info');
 
-export class StackOverflowAuthRouter implements IRouter {
+export class StackOverflowRouter implements IRouter {
     router: Router;
     access_token: string
 
@@ -28,7 +28,7 @@ export class StackOverflowAuthRouter implements IRouter {
 
         request(options, (error: any, response: request.Response, body: any) => {
             if(!error && response.statusCode === 200) {
-                console.log(response);
+                res.redirect(options.form.redirect_uri);
             }
         })
     }
@@ -52,16 +52,43 @@ export class StackOverflowAuthRouter implements IRouter {
         request(options, (error: any, response: request.Response, body: any) => {
             if(!error && response.statusCode === 200) {
                 this.access_token = JSON.parse(body).access_token;
+                console.log(this.access_token);
                 res.redirect('https://stackapps.com/');
 
             }
         });
     }
 
+// https://stackoverflow.com/oauth?client_id=12765&scope=private_info&redirect_uri=http://178.128.152.177/stackoverflow/auth
+    public getEvents(req: Request, res: Response, next: NextFunction) : any {
+        const minutes: number = (req.params.minutes == null) ? 15 : req.params.minutes;
+
+        request.get('https://api.stackexchange.com/2.2/events', {
+            headers: {
+                'Accept-Encoding': 'gzip'
+            },
+            form: {
+                key: auth.SO_API_KEY,
+                access_token: this.access_token,
+                page: '1',
+                pagesize: '10',
+                since: (Math.floor((Date.now() / 1000)) - 60 * minutes).toString(),
+                site: 'stackoverflow',
+                filter: '!9Z(-x*8uy',
+            },
+            gzip: true,
+        }, (error: any, response: request.Response, body: any) => {
+            if(!error && response.statusCode === 200) {
+                res.json(JSON.parse(body));
+            }
+        });
+    }
+
     init() {
-        //this.router.get('/auth', this.authorize);
         this.router.get('/auth', this.access.bind(this));
+        this.router.get('/events', this.getEvents.bind(this));
+        this.router.get('/events/:minutes', this.getEvents.bind(this));
     }
 }
 
-export default new StackOverflowAuthRouter().router;
+export default new StackOverflowRouter().router;

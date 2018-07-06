@@ -1,21 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 /* External Imports */
-import { Request, Response, NextFunction, Router } from 'express';
-import request = require('request');
-
-/* Internal Imports */
-import IRouter from '../i_router';
-import auth = require('../../auth_info');
-
-export class SlackAuthRouter implements IRouter {
-    router: Router;
-
+const express_1 = require("express");
+const request = require("request");
+const auth = require("../auth_info");
+class SlackRouter {
     constructor() {
-        this.router = Router();
+        this.router = express_1.Router();
         this.init();
     }
-
-    public authorize(req: Request, res: Response, next: NextFunction) : void {
-        const options: any = {
+    authorize(req, res, next) {
+        const options = {
             url: 'https://slack.com/oauth/authorize',
             method: 'GET',
             form: {
@@ -26,16 +21,14 @@ export class SlackAuthRouter implements IRouter {
                 state: auth.SLACK_STATE,
             }
         };
-
-        request(options, (error: any, response: request.Response, body: any) => {
-            if(!error && response.statusCode === 200) {
+        request(options, (error, response, body) => {
+            if (!error && response.statusCode === 200) {
                 console.log(response);
             }
         });
     }
-
-    public access(req: Request, res: Response, next: NextFunction) : void {
-        const options: any = {
+    access(req, res, next) {
+        const options = {
             url: 'https://slack.com/api/oauth.access',
             method: 'POST',
             form: {
@@ -46,28 +39,24 @@ export class SlackAuthRouter implements IRouter {
                 code: req.query.code
             }
         };
-
-        request(options, (error: any, response: request.Response, body: any) => {
-            if(!error && response.statusCode === 200) {
+        request(options, (error, response, body) => {
+            if (!error && response.statusCode === 200) {
                 this.redirect(JSON.parse(body).access_token, res);
             }
         });
     }
-
-    private redirect(accessToken: string, res: Response) : void {
-        request.post('https://slack.com/api/team.info', {form: {token: accessToken}}, (error: any, response: request.Response, body: any) => {
+    redirect(accessToken, res) {
+        request.post('https://slack.com/api/team.info', { form: { token: accessToken } }, (error, response, body) => {
             if (!error && response.statusCode == 200) {
                 let team = JSON.parse(body).team.domain;
                 res.redirect('http://' + team + '.slack.com');
             }
         });
     }
-
     init() {
-        //this.router.get('/auth', this.authorize);
         this.router.get('/auth', this.access.bind(this));
     }
-
 }
-
-export default new SlackAuthRouter().router;
+exports.SlackRouter = SlackRouter;
+exports.default = new SlackRouter().router;
+//# sourceMappingURL=slack_router.js.map

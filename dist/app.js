@@ -9,8 +9,8 @@ const logger = require("morgan");
 const bodyParser = require("body-parser");
 /* Internal Imports */
 const index_router_1 = __importDefault(require("./routes/index_router"));
-const slack_auth_router_1 = __importDefault(require("./routes/auth/slack_auth_router"));
-const stackoverflow_auth_router_1 = __importDefault(require("./routes/auth/stackoverflow_auth_router"));
+const slack_router_1 = __importDefault(require("./routes/slack_router"));
+const stackoverflow_router_1 = __importDefault(require("./routes/stackoverflow_router"));
 /* The port the server will listen on. */
 const PORT = 3000;
 class SOB {
@@ -29,8 +29,8 @@ class SOB {
     // Configure API endpoints (routing).
     routes() {
         this.app.use('/', index_router_1.default);
-        this.app.use('/slack', slack_auth_router_1.default);
-        this.app.use('/stackoverflow', stackoverflow_auth_router_1.default);
+        this.app.use('/slack', slack_router_1.default);
+        this.app.use('/stackoverflow', stackoverflow_router_1.default);
     }
     // Start the server.
     start() {
