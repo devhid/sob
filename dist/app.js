@@ -1,12 +1,16 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 /* External Imports */
 const express = require("express");
 const logger = require("morgan");
 const bodyParser = require("body-parser");
 /* Internal Imports */
-const index_router_1 = require("./routes/index_router");
-const auth_router_1 = require("./routes/auth_router");
+const index_router_1 = __importDefault(require("./routes/index_router"));
+const slack_auth_router_1 = __importDefault(require("./routes/auth/slack_auth_router"));
+const stackoverflow_auth_router_1 = __importDefault(require("./routes/auth/stackoverflow_auth_router"));
 /* The port the server will listen on. */
 const PORT = 3000;
 class SOB {
@@ -25,7 +29,8 @@ class SOB {
     // Configure API endpoints (routing).
     routes() {
         this.app.use('/', index_router_1.default);
-        this.app.use('/auth', auth_router_1.default);
+        this.app.use('/slack', slack_auth_router_1.default);
+        this.app.use('/stackoverflow', stackoverflow_auth_router_1.default);
     }
     // Start the server.
     start() {
@@ -33,3 +38,4 @@ class SOB {
     }
 }
 new SOB();
+//# sourceMappingURL=app.js.map

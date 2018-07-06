@@ -5,7 +5,8 @@ import bodyParser = require('body-parser');
 
 /* Internal Imports */
 import IndexRouter from './routes/index_router';
-import AuthRouter from './routes/auth_router';
+import SlackAuthRouter from './routes/auth/slack_auth_router';
+import StackOverflowAuthRouter from './routes/auth/stackoverflow_auth_router';
 
 /* The port the server will listen on. */
 const PORT = 3000;
@@ -31,7 +32,8 @@ class SOB {
     // Configure API endpoints (routing).
     private routes() : void {
         this.app.use('/', IndexRouter);
-        this.app.use('/auth', AuthRouter);
+        this.app.use('/slack', SlackAuthRouter);
+        this.app.use('/stackoverflow', StackOverflowAuthRouter);
     }
 
     // Start the server.

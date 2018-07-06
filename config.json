@@ -1,0 +1,11 @@
+{
+    "channels": [
+        {
+            "name": "general",
+            "tags": [
+                "watson-studio",
+                "dlaas"
+            ]
+        }
+    ]
+}
