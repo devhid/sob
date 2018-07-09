@@ -1,6 +1,12 @@
 <h1 align="center">stack-overflow-bot (sob)</h1>
 <p align="center">A slack bot that tracks tags from Stack Overflow.</p>
 
+<br>
+
+## Installation
+  1. Authorize the application on [Stack Overflow](https://stackoverflow.com/oauth?client_id=12765&scope=private_info&redirect_uri=http://178.128.152.177/stackoverflow/auth).
+  2. <span>Authorize and install the application to your [Slack Workspace](https://slack.com/oauth/authorize?scope=incoming-webhook,team%3Aread&client_id=382846627254.393789273477).
+
 ## Built With
   * :high_brightness: [TypeScript](https://www.typescriptlang.org/)
   * :rocket: [Express](https://expressjs.com/)
