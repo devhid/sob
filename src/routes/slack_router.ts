@@ -16,26 +16,6 @@ export class SlackRouter implements IRouter {
 
     public authorize(req: Request, res: Response, next: NextFunction) : void {
         const options: any = {
-            url: 'https://slack.com/oauth/authorize',
-            method: 'GET',
-            form: {
-                client_id: auth.SLACK_CLIENT_ID,
-                client_secret: auth.SLACK_CLIENT_SECRET,
-                scope: auth.SLACK_SCOPE,
-                redirect_uri: auth.SLACK_REDIRECT_URI,
-                state: auth.SLACK_STATE,
-            }
-        };
-
-        request(options, (error: any, response: request.Response, body: any) => {
-            if(!error && response.statusCode === 200) {
-                console.log(response);
-            }
-        });
-    }
-
-    public access(req: Request, res: Response, next: NextFunction) : void {
-        const options: any = {
             url: 'https://slack.com/api/oauth.access',
             method: 'POST',
             form: {
@@ -64,7 +44,7 @@ export class SlackRouter implements IRouter {
     }
 
     init() {
-        this.router.get('/auth', this.access.bind(this));
+        this.router.get('/auth', this.authorize.bind(this));
     }
 
 }

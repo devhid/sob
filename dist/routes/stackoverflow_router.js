@@ -10,22 +10,8 @@ class StackOverflowRouter {
         this.init();
     }
     authorize(req, res, next) {
-        const options = {
-            url: 'https://stackoverflow.com/oauth',
-            method: 'GET',
-            form: {
-                client_id: auth.SO_CLIENT_ID,
-                scope: auth.SO_SCOPE,
-                redirect_uri: auth.SO_REDIRECT_URI,
-            }
-        };
-        request(options, (error, response, body) => {
-            if (!error && response.statusCode === 200) {
-                res.redirect(options.form.redirect_uri);
-            }
-        });
-    }
-    access(req, res, next) {
+        const successMessage = 'Authorized. You may close this window.';
+        const errorMessage = 'Could not authenticate properly.';
         const options = {
             url: 'https://stackoverflow.com/oauth/access_token/json',
             method: 'POST',
@@ -43,14 +29,22 @@ class StackOverflowRouter {
         request(options, (error, response, body) => {
             if (!error && response.statusCode === 200) {
                 this.access_token = JSON.parse(body).access_token;
-                console.log(this.access_token);
-                res.redirect('https://stackapps.com/');
+                res.json({ type: 'Success', message: successMessage });
+            }
+            else {
+                res.json({ type: 'Error', message: errorMessage });
             }
         });
     }
-    // https://stackoverflow.com/oauth?client_id=12765&scope=private_info&redirect_uri=http://178.128.152.177/stackoverflow/auth
+    getEventsDefault(req, res, next) {
+        const minutes = 15;
+        this.eventsRequest(res, minutes);
+    }
     getEvents(req, res, next) {
-        const minutes = (req.params.minutes == null) ? 15 : req.params.minutes;
+        const minutes = (req.params.minutes == undefined) ? 15 : req.params.minutes;
+        this.eventsRequest(res, minutes);
+    }
+    eventsRequest(res, minutes) {
         request.get('https://api.stackexchange.com/2.2/events', {
             headers: {
                 'Accept-Encoding': 'gzip'
@@ -67,13 +61,14 @@ class StackOverflowRouter {
             gzip: true,
         }, (error, response, body) => {
             if (!error && response.statusCode === 200) {
-                res.json(JSON.parse(body));
+                let events = JSON.parse(body);
+                res.json(events);
             }
         });
     }
     init() {
-        this.router.get('/auth', this.access.bind(this));
-        this.router.get('/events', this.getEvents.bind(this));
+        this.router.get('/auth', this.authorize.bind(this));
+        this.router.get('/events', this.getEventsDefault.bind(this));
         this.router.get('/events/:minutes', this.getEvents.bind(this));
     }
 }

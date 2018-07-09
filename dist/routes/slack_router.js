@@ -11,24 +11,6 @@ class SlackRouter {
     }
     authorize(req, res, next) {
         const options = {
-            url: 'https://slack.com/oauth/authorize',
-            method: 'GET',
-            form: {
-                client_id: auth.SLACK_CLIENT_ID,
-                client_secret: auth.SLACK_CLIENT_SECRET,
-                scope: auth.SLACK_SCOPE,
-                redirect_uri: auth.SLACK_REDIRECT_URI,
-                state: auth.SLACK_STATE,
-            }
-        };
-        request(options, (error, response, body) => {
-            if (!error && response.statusCode === 200) {
-                console.log(response);
-            }
-        });
-    }
-    access(req, res, next) {
-        const options = {
             url: 'https://slack.com/api/oauth.access',
             method: 'POST',
             form: {
@@ -54,7 +36,7 @@ class SlackRouter {
         });
     }
     init() {
-        this.router.get('/auth', this.access.bind(this));
+        this.router.get('/auth', this.authorize.bind(this));
     }
 }
 exports.SlackRouter = SlackRouter;

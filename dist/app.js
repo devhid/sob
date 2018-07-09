@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 /* External Imports */
 const express = require("express");
+const prettify = require("express-prettify");
 const logger = require("morgan");
 const bodyParser = require("body-parser");
 /* Internal Imports */
@@ -25,6 +26,7 @@ class SOB {
         this.app.use(logger('dev'));
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
+        this.app.use(prettify({ query: 'pretty' }));
     }
     // Configure API endpoints (routing).
     routes() {

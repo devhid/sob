@@ -1,5 +1,6 @@
 /* External Imports */
 import express = require('express');
+import prettify = require('express-prettify');
 import logger = require('morgan');
 import bodyParser = require('body-parser');
 
@@ -27,6 +28,7 @@ class SOB {
         this.app.use(logger('dev'));
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
+        this.app.use(prettify({ query: 'pretty' }));
     }
 
     // Configure API endpoints (routing).
