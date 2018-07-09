@@ -10,7 +10,7 @@ The bot aims to **encourage users to ask questions to Stack Overflow** instead o
 
 ## Installation
   1. Authorize the application on <a href="https://stackoverflow.com/oauth?client_id=12765&scope=private_info&redirect_uri=http://178.128.152.177/stackoverflow/auth" target="_blank">Stack Overflow</a>.
-  2. <span>Authorize and install the application to your <a href="https://slack.com/oauth/authorize?scope=incoming-webhook,team%3Aread&client_id=382846627254.393789273477" target="_blank">Slack Workspace</a>.
+  2. Authorize and install the application to your <a href="https://slack.com/oauth/authorize?scope=incoming-webhook,team%3Aread&client_id=382846627254.393789273477" target="_blank">Slack Workspace</a>.
 
 ## Built With
   * :high_brightness: [TypeScript](https://www.typescriptlang.org/)
