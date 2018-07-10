@@ -8,6 +8,7 @@ import bodyParser = require('body-parser');
 import IndexRouter from './routes/index_router';
 import SlackRouter from './routes/slack_router';
 import StackOverflowRouter from './routes/stackoverflow_router';
+import Bot = require('./bot');
 
 /* The port the server will listen on. */
 const PORT = 3000;
@@ -21,6 +22,7 @@ class SOB {
         this.middleware();
         this.routes();
         this.start();
+        this.update();
     }
 
     // Configure middleware.
@@ -33,14 +35,27 @@ class SOB {
 
     // Configure API endpoints (routing).
     private routes() : void {
-        this.app.use('/', IndexRouter);
-        this.app.use('/slack', SlackRouter);
-        this.app.use('/stackoverflow', StackOverflowRouter);
+        this.app.use('/', IndexRouter.router);
+        this.app.use('/slack', SlackRouter.router);
+        this.app.use('/stackoverflow', StackOverflowRouter.router);
     }
 
     // Start the server.
     private start() : void {
         this.app.listen(PORT, () => console.log('Server listening on port: %s', PORT));
+    }
+
+    private update() : void {
+        let authCheck = setInterval( () => {
+            console.log("Checking authorizations...");
+
+            if(SlackRouter.access_token !== undefined && StackOverflowRouter.access_token !== undefined) {
+                console.log("Bot created.");
+                let bot = new Bot.Bot(SlackRouter.access_token, StackOverflowRouter.access_token);
+
+                clearInterval(authCheck);
+            }
+        }, 1000 * 30);
     }
 }
 

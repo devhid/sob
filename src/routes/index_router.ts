@@ -18,4 +18,4 @@ export class IndexRouter implements IRouter {
     }
 }
 
-export default new IndexRouter().router;
+export default new IndexRouter();

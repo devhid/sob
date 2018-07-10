@@ -14,5 +14,5 @@ class IndexRouter {
     }
 }
 exports.IndexRouter = IndexRouter;
-exports.default = new IndexRouter().router;
+exports.default = new IndexRouter();
 //# sourceMappingURL=index_router.js.map

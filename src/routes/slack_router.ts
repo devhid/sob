@@ -8,6 +8,7 @@ import auth = require('../auth_info');
 
 export class SlackRouter implements IRouter {
     router: Router;
+    access_token: string
 
     constructor() {
         this.router = Router();
@@ -29,7 +30,8 @@ export class SlackRouter implements IRouter {
 
         request(options, (error: any, response: request.Response, body: any) => {
             if(!error && response.statusCode === 200) {
-                this.redirect(JSON.parse(body).access_token, res);
+                this.access_token = JSON.parse(body).access_token;
+                this.redirect(this.access_token, res);
             }
         });
     }
@@ -43,10 +45,10 @@ export class SlackRouter implements IRouter {
         });
     }
 
-    init() {
+    init() : void {
         this.router.get('/auth', this.authorize.bind(this));
     }
 
 }
 
-export default new SlackRouter().router;
+export default new SlackRouter();

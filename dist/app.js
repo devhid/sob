@@ -12,6 +12,7 @@ const bodyParser = require("body-parser");
 const index_router_1 = __importDefault(require("./routes/index_router"));
 const slack_router_1 = __importDefault(require("./routes/slack_router"));
 const stackoverflow_router_1 = __importDefault(require("./routes/stackoverflow_router"));
+const Bot = require("./bot");
 /* The port the server will listen on. */
 const PORT = 3000;
 class SOB {
@@ -20,6 +21,7 @@ class SOB {
         this.middleware();
         this.routes();
         this.start();
+        this.update();
     }
     // Configure middleware.
     middleware() {
@@ -30,13 +32,23 @@ class SOB {
     }
     // Configure API endpoints (routing).
     routes() {
-        this.app.use('/', index_router_1.default);
-        this.app.use('/slack', slack_router_1.default);
-        this.app.use('/stackoverflow', stackoverflow_router_1.default);
+        this.app.use('/', index_router_1.default.router);
+        this.app.use('/slack', slack_router_1.default.router);
+        this.app.use('/stackoverflow', stackoverflow_router_1.default.router);
     }
     // Start the server.
     start() {
         this.app.listen(PORT, () => console.log('Server listening on port: %s', PORT));
+    }
+    update() {
+        let authCheck = setInterval(() => {
+            console.log("Checking authorizations...");
+            if (slack_router_1.default.access_token !== undefined && stackoverflow_router_1.default.access_token !== undefined) {
+                console.log("Bot created.");
+                let bot = new Bot.Bot(slack_router_1.default.access_token, stackoverflow_router_1.default.access_token);
+                clearInterval(authCheck);
+            }
+        }, 1000 * 30);
     }
 }
 new SOB();

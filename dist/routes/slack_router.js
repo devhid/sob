@@ -23,7 +23,8 @@ class SlackRouter {
         };
         request(options, (error, response, body) => {
             if (!error && response.statusCode === 200) {
-                this.redirect(JSON.parse(body).access_token, res);
+                this.access_token = JSON.parse(body).access_token;
+                this.redirect(this.access_token, res);
             }
         });
     }
@@ -40,5 +41,5 @@ class SlackRouter {
     }
 }
 exports.SlackRouter = SlackRouter;
-exports.default = new SlackRouter().router;
+exports.default = new SlackRouter();
 //# sourceMappingURL=slack_router.js.map
