@@ -1,7 +1,6 @@
 import request = require('request');
 
 export class SlackClient {
-    url: string = 'http://178.128.152.177';
     access_token: string = null;
 
     constructor(access_token : string) {

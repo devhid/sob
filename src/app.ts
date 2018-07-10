@@ -47,11 +47,11 @@ class SOB {
 
     private update() : void {
         let authCheck = setInterval( () => {
-            console.log("Checking authorizations...");
+            let slackToken = SlackRouter.access_token;
+            let soToken = StackOverflowRouter.access_token;
 
-            if(SlackRouter.access_token !== undefined && StackOverflowRouter.access_token !== undefined) {
-                console.log("Bot created.");
-                let bot = new Bot.Bot(SlackRouter.access_token, StackOverflowRouter.access_token);
+            if(slackToken !== undefined && soToken !== undefined) {
+                let bot = new Bot.Bot(slackToken, soToken);
 
                 clearInterval(authCheck);
             }

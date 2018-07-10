@@ -2,7 +2,6 @@ import request = require('request');
 import auth = require('../auth_info');
 
 export class StackOverflowClient {
-    url: string = 'http://178.128.152.177';
     access_token: string;
 
     constructor(access_token : string) {
