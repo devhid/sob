@@ -42,13 +42,13 @@ class SOB {
     }
     update() {
         let authCheck = setInterval(() => {
-            console.log("Checking authorizations...");
-            if (slack_router_1.default.access_token !== undefined && stackoverflow_router_1.default.access_token !== undefined) {
-                console.log("Bot created.");
-                let bot = new Bot.Bot(slack_router_1.default.access_token, stackoverflow_router_1.default.access_token);
+            let slackToken = slack_router_1.default.access_token;
+            let soToken = stackoverflow_router_1.default.access_token;
+            if (slackToken !== undefined && soToken !== undefined) {
+                let bot = new Bot.Bot(slackToken, soToken);
                 clearInterval(authCheck);
             }
-        }, 1000 * 30);
+        }, 1000 * 10);
     }
 }
 new SOB();

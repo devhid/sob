@@ -4,7 +4,6 @@ const request = require("request");
 const auth = require("../auth_info");
 class StackOverflowClient {
     constructor(access_token) {
-        this.url = 'http://178.128.152.177';
         this.access_token = access_token;
     }
     getEvents(minutes, callback) {

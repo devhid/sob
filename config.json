@@ -4,7 +4,10 @@
             "name": "general",
             "tags": [
                 "watson-studio",
-                "dlaas"
+                "dlaas",
+                "javascript",
+                "deep-learning",
+                "ibm"
             ]
         }
     ]

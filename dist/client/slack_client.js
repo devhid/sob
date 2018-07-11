@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const request = require("request");
 class SlackClient {
     constructor(access_token) {
-        this.url = 'http://178.128.152.177';
         this.access_token = null;
         this.access_token = access_token;
     }
