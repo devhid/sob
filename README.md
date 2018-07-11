@@ -16,7 +16,8 @@ The bot aims to **encourage users to ask questions to Stack Overflow** instead o
   * :high_brightness: [TypeScript](https://www.typescriptlang.org/)
   * :rocket: [Express](https://expressjs.com/)
   * :wrench: [Body-Parser](https://github.com/expressjs/body-parser)
-  * :globe_with_meridians: [Request](https://github.com/request/request) 
+  * :globe_with_meridians: [Request](https://github.com/request/request)
+  * :trident: [Cheerio](https://cheerio.js.org/)
 
 ## Features
  * Specify multiple tags per channel.
