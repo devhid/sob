@@ -9,6 +9,7 @@ export class IndexRouter implements IRouter {
         this.init();
     }
 
+    // Default response for the server with no routes.
     public getDefault(req: Request, res: Response, next: NextFunction) : void {
         res.json({ message: 'Successful.' });
     }

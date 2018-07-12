@@ -3,12 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /* External Imports */
 const express_1 = require("express");
 const request = require("request");
-const auth = require("../auth_info");
+const auth = require("../auth/auth_info");
 class SlackRouter {
     constructor() {
         this.router = express_1.Router();
         this.init();
     }
+    // Auth request to retrieve access token from Slack.
     authorize(req, res, next) {
         const options = {
             url: 'https://slack.com/api/oauth.access',
@@ -28,6 +29,7 @@ class SlackRouter {
             }
         });
     }
+    // Redirect the user to the team slack workspace after authentication succeeds.
     redirect(accessToken, res) {
         request.post('https://slack.com/api/team.info', { form: { token: accessToken } }, (error, response, body) => {
             if (!error && response.statusCode == 200) {

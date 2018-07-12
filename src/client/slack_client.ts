@@ -7,6 +7,7 @@ export class SlackClient {
         this.access_token = access_token;
     }
 
+    // Sends a message to a specified channel in slack.
     public sendMessage(channel: string, message: any, callback: Function) : any {
         let text = message.text;
         let attachments = message.attachments;
@@ -29,6 +30,7 @@ export class SlackClient {
         });
     }
 
+    // Gets the channel id of a c2hannel given its name.
     public getChannelId(channelName: string, callback: Function) : any {
         const url = `https://slack.com/api/channels.list?token=${this.access_token}`;
 

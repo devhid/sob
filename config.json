@@ -1,4 +1,17 @@
 {
+    "questions_since": 15,
+    "update_interval": 15,
+    "message_format": {
+        "text": "*Question*: <{link}|{title}>",
+        "attachments": [
+            {
+                "text": "*Excerpt*: {excerpt}\n*Tags*: {tags}",
+                "footer": "Stack Overflow | {date_posted} UTC",
+                "footer_icon": "https://i.imgur.com/FzHXEPd.png",
+                "mrkdwn_in": ["text"]
+            }
+        ]
+    },
     "channels": [
         {
             "name": "general",
@@ -8,6 +21,17 @@
                 "javascript",
                 "deep-learning",
                 "ibm"
+            ]
+        },
+
+        {
+            "name": "random",
+            "tags": [
+                "java",
+                "python",
+                "node.js",
+                "php",
+                "javascript"
             ]
         }
     ]

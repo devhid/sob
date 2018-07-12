@@ -6,6 +6,7 @@ class SlackClient {
         this.access_token = null;
         this.access_token = access_token;
     }
+    // Sends a message to a specified channel in slack.
     sendMessage(channel, message, callback) {
         let text = message.text;
         let attachments = message.attachments;
@@ -25,6 +26,7 @@ class SlackClient {
             });
         });
     }
+    // Gets the channel id of a c2hannel given its name.
     getChannelId(channelName, callback) {
         const url = `https://slack.com/api/channels.list?token=${this.access_token}`;
         request.get(url, (error, response, body) => {

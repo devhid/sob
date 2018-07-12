@@ -4,7 +4,7 @@ import request = require('request');
 
 /* Internal Imports */
 import IRouter from './i_router';
-import auth = require('../auth_info');
+import auth = require('../auth/auth_info');
 
 export class StackOverflowRouter implements IRouter {
     router: Router;
@@ -15,6 +15,7 @@ export class StackOverflowRouter implements IRouter {
         this.init();
     }
 
+    // Auth request to retrieve access token from Stack Overflow.
     public authorize(req: Request, res: Response, next: NextFunction) : void {
         const successMessage = 'Authorized. You may close this window.';
         const errorMessage = 'Could not authenticate properly.';

@@ -6,6 +6,7 @@ class IndexRouter {
         this.router = express_1.Router();
         this.init();
     }
+    // Default response for the server with no routes.
     getDefault(req, res, next) {
         res.json({ message: 'Successful.' });
     }

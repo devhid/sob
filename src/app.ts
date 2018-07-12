@@ -8,10 +8,13 @@ import bodyParser = require('body-parser');
 import IndexRouter from './routes/index_router';
 import SlackRouter from './routes/slack_router';
 import StackOverflowRouter from './routes/stackoverflow_router';
-import Bot = require('./bot');
+import Bot = require('./bot/so_bot');
 
 /* The port the server will listen on. */
 const PORT = 3000;
+
+/* Seconds before server checks if it has received the slack and SO tokens. */
+const TOKEN_INTERVAL = 10;
 
 class SOB {
     // Express Application Instance
@@ -45,17 +48,18 @@ class SOB {
         this.app.listen(PORT, () => console.log('Server listening on port: %s', PORT));
     }
 
+    // Check if the user authorized both on Stack Overflow and Slack.
     private update() : void {
         let authCheck = setInterval( () => {
             let slackToken = SlackRouter.access_token;
             let soToken = StackOverflowRouter.access_token;
 
             if(slackToken !== undefined && soToken !== undefined) {
-                let bot = new Bot.Bot(slackToken, soToken);
+                new Bot.SOBot(slackToken, soToken);
 
                 clearInterval(authCheck);
             }
-        }, 1000 * 10);
+        }, 1000 * TOKEN_INTERVAL);
     }
 }
 

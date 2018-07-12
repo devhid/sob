@@ -4,7 +4,7 @@ import request = require('request');
 
 /* Internal Imports */
 import IRouter from './i_router';
-import auth = require('../auth_info');
+import auth = require('../auth/auth_info');
 
 export class SlackRouter implements IRouter {
     router: Router;
@@ -15,6 +15,7 @@ export class SlackRouter implements IRouter {
         this.init();
     }
 
+    // Auth request to retrieve access token from Slack.
     public authorize(req: Request, res: Response, next: NextFunction) : void {
         const options: any = {
             url: 'https://slack.com/api/oauth.access',
@@ -36,6 +37,7 @@ export class SlackRouter implements IRouter {
         });
     }
 
+    // Redirect the user to the team slack workspace after authentication succeeds.
     private redirect(accessToken: string, res: Response) : void {
         request.post('https://slack.com/api/team.info', {form: {token: accessToken}}, (error: any, response: request.Response, body: any) => {
             if (!error && response.statusCode == 200) {
