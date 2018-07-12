@@ -22,6 +22,6 @@ The bot aims to **encourage users to ask questions to Stack Overflow** instead o
 ## Features
  * Specify multiple tags per channel.
 
-## To-do
+## To-do:
  * Right now, the bot only handles one client. Need to handle multiple connections and store access tokens in some database.
  
