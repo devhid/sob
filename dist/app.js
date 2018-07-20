@@ -8,22 +8,30 @@ const express = require("express");
 const prettify = require("express-prettify");
 const logger = require("morgan");
 const bodyParser = require("body-parser");
+const http = require("http");
+const ioServer = require("socket.io");
 /* Internal Imports */
 const index_router_1 = __importDefault(require("./routes/index_router"));
-const slack_router_1 = __importDefault(require("./routes/slack_router"));
-const stackoverflow_router_1 = __importDefault(require("./routes/stackoverflow_router"));
+const slack_auth_router_1 = __importDefault(require("./routes/slack_auth_router"));
 const Bot = require("./bot/so_bot");
+const auth = require("./auth/auth_info");
 /* The port the server will listen on. */
 const PORT = 3000;
 /* Seconds before server checks if it has received the slack and SO tokens. */
 const TOKEN_INTERVAL = 10;
 class SOB {
     constructor() {
-        this.app = express();
+        this.init();
         this.middleware();
         this.routes();
         this.start();
         this.update();
+    }
+    // Initialize fields.
+    init() {
+        this.app = express();
+        this.server = http.createServer(this.app);
+        this.socket = ioServer(this.server);
     }
     // Configure middleware.
     middleware() {
@@ -35,20 +43,25 @@ class SOB {
     // Configure API endpoints (routing).
     routes() {
         this.app.use('/', index_router_1.default.router);
-        this.app.use('/slack', slack_router_1.default.router);
-        this.app.use('/stackoverflow', stackoverflow_router_1.default.router);
+        this.app.use('/slack', slack_auth_router_1.default.router);
     }
     // Start the server.
     start() {
-        this.app.listen(PORT, () => console.log('Server listening on port: %s', PORT));
+        // this.socket.on('connection', (socket: ioServer.Socket) => {
+        //     socket.on('authorization', (msg: string) => {
+        //         console.log(msg);
+        //     });
+        // });
+        this.server.listen(PORT, () => {
+            console.log('Server listening on port: %s', PORT);
+        });
     }
-    // Check if the user authorized both on Stack Overflow and Slack.
+    // Check if the user authorized on Slack.
     update() {
         let authCheck = setInterval(() => {
-            let slackToken = slack_router_1.default.access_token;
-            let soToken = stackoverflow_router_1.default.access_token;
-            if (slackToken !== undefined && soToken !== undefined) {
-                new Bot.SOBot(slackToken, soToken);
+            let slackToken = slack_auth_router_1.default.access_token;
+            if (slackToken !== undefined) {
+                new Bot.SOBot(slackToken, auth.SO_ACCESS_TOKEN);
                 clearInterval(authCheck);
             }
         }, 1000 * TOKEN_INTERVAL);

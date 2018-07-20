@@ -1,12 +1,13 @@
 /* External Imports */
 import { Request, Response, NextFunction, Router } from 'express';
 import request = require('request');
+import ioClient = require('socket.io-client');
 
 /* Internal Imports */
 import IRouter from './i_router';
 import auth = require('../auth/auth_info');
 
-export class SlackRouter implements IRouter {
+export class SlackAuthRouter implements IRouter {
     router: Router;
     access_token: string
 
@@ -32,6 +33,8 @@ export class SlackRouter implements IRouter {
         request(options, (error: any, response: request.Response, body: any) => {
             if(!error && response.statusCode === 200) {
                 this.access_token = JSON.parse(body).access_token;
+
+                this.authorizeClient();
                 this.redirect(this.access_token, res);
             }
         });
@@ -39,12 +42,23 @@ export class SlackRouter implements IRouter {
 
     // Redirect the user to the team slack workspace after authentication succeeds.
     private redirect(accessToken: string, res: Response) : void {
-        request.post('https://slack.com/api/team.info', {form: {token: accessToken}}, (error: any, response: request.Response, body: any) => {
+        this.getTeamName(accessToken, (teamName: string) => {
+            res.redirect(`http://${teamName}.slack.com`);
+        });
+    }
+
+    private getTeamName(accessToken : string, callback: Function) : any {
+        request.post(`https://slack.com/api/team.info?token=${accessToken}`, (error: any, response: request.Response, body: any) => {
             if (!error && response.statusCode == 200) {
                 let team = JSON.parse(body).team.domain;
-                res.redirect('http://' + team + '.slack.com');
+                return callback(team);
             }
         });
+    }
+
+    private authorizeClient() : void {
+        let client: SocketIOClient.Socket = ioClient.connect('http://localhost:3000');
+        client.emit('authorization', 'A client has authorized the application.');
     }
 
     init() : void {
@@ -53,4 +67,4 @@ export class SlackRouter implements IRouter {
 
 }
 
-export default new SlackRouter();
+export default new SlackAuthRouter();

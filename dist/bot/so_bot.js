@@ -57,7 +57,7 @@ class SOBot {
     }
     // Loads the configuration object.
     loadConfig() {
-        const config = path.join(__dirname, '../', CONFIG_JSON);
+        const config = path.join(__dirname, '..', '..', CONFIG_JSON);
         if (this.config === undefined) {
             this.config = JSON.parse(fs.readFileSync(config, 'utf-8'));
         }

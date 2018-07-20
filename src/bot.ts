@@ -1,11 +1,11 @@
-import Slack = require('../client/slack_client');
-import StackOverflow = require('../client/stackoverflow_client');
+import Slack = require('./client/slack_client');
+import StackOverflow = require('./client/stackoverflow_client');
 import fs = require('fs');
 import path = require('path');
 
 const CONFIG_JSON : string = 'config.json';
 
-export class SOBot {
+export class Bot {
     slackClient: any;
     soClient: any;
 
@@ -76,7 +76,7 @@ export class SOBot {
 
     // Loads the configuration object.
     private loadConfig() : void {
-        const config = path.join(__dirname, '../', CONFIG_JSON);
+        const config = path.join(__dirname, '..', '..', CONFIG_JSON);
         if(this.config === undefined) {
             this.config = JSON.parse(fs.readFileSync(config, 'utf-8'));
         }

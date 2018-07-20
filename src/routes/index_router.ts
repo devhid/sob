@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction, Router } from 'express';
 import IRouter from './i_router';
+import path from 'path';
 
 export class IndexRouter implements IRouter {
     router: Router
@@ -11,7 +12,7 @@ export class IndexRouter implements IRouter {
 
     // Default response for the server with no routes.
     public getDefault(req: Request, res: Response, next: NextFunction) : void {
-        res.json({ message: 'Successful.' });
+        res.sendFile(path.join(__dirname, '..', '..', 'public', 'index.html'));
     }
 
     init(): void {

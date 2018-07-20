@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Stack Overflow Bot</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge;" />
+
+        <link href="https://unpkg.com/cirrus-ui" type="text/css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+        <script src="https://use.fontawesome.com/60107db17d.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+
+    </head>
+
+    <body>
+        <div id="splash-img" style="background-color: #f7f7f7;" class="hero fullscreen hero-img parallax-img">
+            <div class="hero-body">
+                <div class="content text-center">
+                    <h1 class="title"><i style="color: #f48024; padding-bottom: 3%;" class="fa fa-stack-overflow pad-right"></i> Stack Overflow Bot</h1>
+                    <h6 class="light subtitle" style="padding-bottom: 3%;">Connecting your favorite questions to Slack.</h6>
+
+                    <div class="btn-container center">
+                        <a
+                        href="https://slack.com/oauth/authorize?scope=incoming-webhook,team%3Aread,bot,channels%3Aread,chat%3Awrite%3Abot&client_id=382846627254.393789273477"
+                        target="_blank">
+                            <button class="btn-xxlarge" >Install<i style="color: #e01563;"class="fa fa-slack pad-left"></i></button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class"content" style="background-color: #f48024;">
+            <div class="row text-center">
+                <br />
+                <br />
+                <h1 style="color: #f7f7f7;" class="title"><i style="color: #444;" class="fa fa-stack-overflow pad-right"></i> Stack Overflow Bot</h1>
+                <h6 class="light subtitle">Connecting your favorite questions to Slack.</p>
+            </div>
+
+            <div class="divider center" style="width: 80%"></div>
+            <br />
+
+            <div class="content text-center">
+                <div class="btn-container center">
+                    <a
+                    href="https://slack.com/oauth/authorize?scope=incoming-webhook,team%3Aread,bot,channels%3Aread,chat%3Awrite%3Abot&client_id=382846627254.393789273477"
+                    target="_blank">
+                        <button class="btn-xxlarge" >Install<i class="fa fa-slack pad-left"></i></button>
+                    </a>
+                </div>
+            </div>
+        </div> -->
+    </body>
+</html>
