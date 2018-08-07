@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SOB_BLUEMIX = process.env.SOB_BLUEMIX;
+exports.SOB_WEBSERVER = process.env.SOB_WEBSERVER;
 exports.SLACK_CLIENT_ID = process.env.SLACK_CLIENT_ID;
 exports.SLACK_CLIENT_SECRET = process.env.SLACK_CLIENT_SECRET;
 exports.SLACK_REDIRECT_URI = process.env.SLACK_REDIRECT_URI;

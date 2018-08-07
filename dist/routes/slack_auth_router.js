@@ -12,7 +12,7 @@ class SlackAuthRouter {
     // Auth request to retrieve access token from Slack.
     authorize(req, res, next) {
         if (req.query.error === 'access_denied') {
-            res.redirect(auth.SOB_BLUEMIX);
+            res.redirect(auth.SOB_WEBSERVER);
             return;
         }
         const options = {

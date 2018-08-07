@@ -1,7 +1,6 @@
 /* External Imports */
 import { Request, Response, NextFunction, Router } from 'express';
 import request = require('request');
-import ioClient = require('socket.io-client');
 
 /* Internal Imports */
 import IRouter from './i_router';
@@ -19,7 +18,7 @@ export class SlackAuthRouter implements IRouter {
     // Auth request to retrieve access token from Slack.
     public authorize(req: Request, res: Response, next: NextFunction) : void {
         if(req.query.error === 'access_denied') {
-            res.redirect(auth.SOB_BLUEMIX);
+            res.redirect(auth.SOB_WEBSERVER);
             return;
         }
 

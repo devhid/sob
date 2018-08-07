@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 /* External Imports */
 const express = require("express");
-const prettify = require("express-prettify");
 const logger = require("morgan");
 const bodyParser = require("body-parser");
 const http = require("http");
@@ -38,7 +37,6 @@ class SOB {
         this.app.use(logger('dev'));
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
-        this.app.use(prettify({ query: 'pretty' }));
     }
     // Configure API endpoints (routing).
     routes() {
@@ -47,11 +45,6 @@ class SOB {
     }
     // Start the server.
     start() {
-        // this.socket.on('connection', (socket: ioServer.Socket) => {
-        //     socket.on('authorization', (msg: string) => {
-        //         console.log(msg);
-        //     });
-        // });
         this.server.listen(PORT, () => {
             console.log('Server listening on port: %s', PORT);
         });
