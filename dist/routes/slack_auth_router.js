@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /* External Imports */
 const express_1 = require("express");
 const request = require("request");
-const ioClient = require("socket.io-client");
 const auth = require("../auth/auth_info");
 class SlackAuthRouter {
     constructor() {
@@ -12,6 +11,10 @@ class SlackAuthRouter {
     }
     // Auth request to retrieve access token from Slack.
     authorize(req, res, next) {
+        if (req.query.error === 'access_denied') {
+            res.redirect(auth.SOB_BLUEMIX);
+            return;
+        }
         const options = {
             url: 'https://slack.com/api/oauth.access',
             method: 'POST',
@@ -26,7 +29,6 @@ class SlackAuthRouter {
         request(options, (error, response, body) => {
             if (!error && response.statusCode === 200) {
                 this.access_token = JSON.parse(body).access_token;
-                this.authorizeClient();
                 this.redirect(this.access_token, res);
             }
         });
@@ -39,15 +41,11 @@ class SlackAuthRouter {
     }
     getTeamName(accessToken, callback) {
         request.post(`https://slack.com/api/team.info?token=${accessToken}`, (error, response, body) => {
-            if (!error && response.statusCode == 200) {
+            if (!error && response.statusCode === 200) {
                 let team = JSON.parse(body).team.domain;
                 return callback(team);
             }
         });
-    }
-    authorizeClient() {
-        let client = ioClient.connect('http://localhost:3000');
-        client.emit('authorization', 'A client has authorized the application.');
     }
     init() {
         this.router.get('/auth', this.authorize.bind(this));

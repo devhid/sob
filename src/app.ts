@@ -15,7 +15,7 @@ import auth = require('./auth/auth_info');
 /* The port the server will listen on. */
 const PORT: number = 3000;
 
-/* Seconds before server checks if it has received the slack and SO tokens. */
+/* Seconds before server checks if it has received the slack token. */
 const TOKEN_INTERVAL: number = 10;
 
 class SOB {

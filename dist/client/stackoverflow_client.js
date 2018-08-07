@@ -29,12 +29,13 @@ class StackOverflowClient {
                 let events = JSON.parse(body).items;
                 return callback(events);
             }
+            return callback(null);
         });
     }
     // Filters the events retrieved a specified minutes ago by questions.
     getQuestions(minutes, callback) {
         this.getEvents(minutes, (events) => {
-            return callback(events.filter((item) => item.event_type === 'question_posted'));
+            return callback(events === null ? null : events.filter((item) => item.event_type === 'question_posted'));
         });
     }
     // Scrape the tags from a specified question link.

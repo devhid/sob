@@ -31,13 +31,15 @@ export class StackOverflowClient {
                 let events = JSON.parse(body).items;
                 return callback(events);
             }
+
+            return callback(null);
         });
     }
 
     // Filters the events retrieved a specified minutes ago by questions.
     public getQuestions(minutes: number, callback: Function) : any {
         this.getEvents(minutes, (events: any) => {
-            return callback(events.filter( (item: any) => item.event_type === 'question_posted'));
+            return callback(events === null ? null : events.filter( (item: any) => item.event_type === 'question_posted'));
         });
     }
 

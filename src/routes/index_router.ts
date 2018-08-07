@@ -3,7 +3,7 @@ import IRouter from './i_router';
 import path from 'path';
 
 export class IndexRouter implements IRouter {
-    router: Router
+    router: Router;
 
     constructor() {
         this.router = Router();

@@ -13,11 +13,11 @@ const ioServer = require("socket.io");
 /* Internal Imports */
 const index_router_1 = __importDefault(require("./routes/index_router"));
 const slack_auth_router_1 = __importDefault(require("./routes/slack_auth_router"));
-const Bot = require("./bot/so_bot");
+const StackOverflowBot = require("./bot");
 const auth = require("./auth/auth_info");
 /* The port the server will listen on. */
 const PORT = 3000;
-/* Seconds before server checks if it has received the slack and SO tokens. */
+/* Seconds before server checks if it has received the slack token. */
 const TOKEN_INTERVAL = 10;
 class SOB {
     constructor() {
@@ -61,7 +61,7 @@ class SOB {
         let authCheck = setInterval(() => {
             let slackToken = slack_auth_router_1.default.access_token;
             if (slackToken !== undefined) {
-                new Bot.SOBot(slackToken, auth.SO_ACCESS_TOKEN);
+                new StackOverflowBot.Bot(slackToken, auth.SO_ACCESS_TOKEN);
                 clearInterval(authCheck);
             }
         }, 1000 * TOKEN_INTERVAL);

@@ -9,7 +9,7 @@ import auth = require('../auth/auth_info');
 
 export class SlackAuthRouter implements IRouter {
     router: Router;
-    access_token: string
+    access_token: string;
 
     constructor() {
         this.router = Router();
@@ -18,6 +18,11 @@ export class SlackAuthRouter implements IRouter {
 
     // Auth request to retrieve access token from Slack.
     public authorize(req: Request, res: Response, next: NextFunction) : void {
+        if(req.query.error === 'access_denied') {
+            res.redirect(auth.SOB_BLUEMIX);
+            return;
+        }
+
         const options: any = {
             url: 'https://slack.com/api/oauth.access',
             method: 'POST',
@@ -34,7 +39,6 @@ export class SlackAuthRouter implements IRouter {
             if(!error && response.statusCode === 200) {
                 this.access_token = JSON.parse(body).access_token;
 
-                this.authorizeClient();
                 this.redirect(this.access_token, res);
             }
         });
@@ -49,16 +53,11 @@ export class SlackAuthRouter implements IRouter {
 
     private getTeamName(accessToken : string, callback: Function) : any {
         request.post(`https://slack.com/api/team.info?token=${accessToken}`, (error: any, response: request.Response, body: any) => {
-            if (!error && response.statusCode == 200) {
+            if (!error && response.statusCode === 200) {
                 let team = JSON.parse(body).team.domain;
                 return callback(team);
             }
         });
-    }
-
-    private authorizeClient() : void {
-        let client: SocketIOClient.Socket = ioClient.connect('http://localhost:3000');
-        client.emit('authorization', 'A client has authorized the application.');
     }
 
     init() : void {

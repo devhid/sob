@@ -1,3 +1,5 @@
+export const SOB_BLUEMIX = process.env.SOB_BLUEMIX;
+
 export const SLACK_CLIENT_ID = process.env.SLACK_CLIENT_ID;
 export const SLACK_CLIENT_SECRET = process.env.SLACK_CLIENT_SECRET;
 export const SLACK_REDIRECT_URI = process.env.SLACK_REDIRECT_URI;

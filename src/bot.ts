@@ -25,7 +25,9 @@ export class Bot {
     // Send the message to Slack every x number of seconds (updateInterval).
     private update() : void {
         this.soClient.getQuestions(this.config.questions_since, (questions: any) => {
-            questions.forEach((question: any) => this.postQuestion(question));
+            if(questions != null) {
+                questions.forEach((question: any) => this.postQuestion(question));
+            }
         });
     }
 
@@ -76,7 +78,7 @@ export class Bot {
 
     // Loads the configuration object.
     private loadConfig() : void {
-        const config = path.join(__dirname, '..', '..', CONFIG_JSON);
+        const config = path.join(__dirname, '..', CONFIG_JSON);
         if(this.config === undefined) {
             this.config = JSON.parse(fs.readFileSync(config, 'utf-8'));
         }

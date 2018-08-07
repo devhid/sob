@@ -13,6 +13,10 @@ export class SlackClient {
         let attachments = message.attachments;
 
         this.getChannelId(channel, (channelId: any) => {
+            if(!channelId) {
+                return callback(null);
+            }
+
             const options: any = {
                 url: 'https://slack.com/api/chat.postMessage',
                 method: 'POST',
@@ -25,18 +29,26 @@ export class SlackClient {
             };
 
             request(options, (error: any, response: request.Response, body: any) => {
-                return callback(JSON.parse(body));
+                if(!error && response.statusCode === 200) {
+                    return callback(JSON.parse(body));
+                }
+
+                return callback(null);
             });
         });
     }
 
-    // Gets the channel id of a c2hannel given its name.
+    // Gets the channel id of a channel given its name.
     public getChannelId(channelName: string, callback: Function) : any {
         const url = `https://slack.com/api/channels.list?token=${this.access_token}`;
 
         request.get(url, (error: any, response: request.Response, body: any) => {
-            let channels = JSON.parse(body).channels;
-            return callback(channels.find( (channel: any) => channel.name === channelName).id);
+            if(!error && response.statusCode === 200) {
+                let channels = JSON.parse(body).channels;
+                let channel = channels.find( (channel: any) => channel.name === channelName);
+
+                return callback('id' in channel ? channel.id : null);
+            }
         });
     }
 }
