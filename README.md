@@ -33,7 +33,7 @@ The bot aims to **encourage users to ask questions to Stack Overflow** instead o
   ```
   chmod 755 auth.sh
   source auth.sh
-  npm run dev
+  npm run prod
   ```
 ## Features
   * Specify multiple tags per channel.
