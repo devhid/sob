@@ -23,16 +23,15 @@ The bot aims to **encourage users to ask questions to Stack Overflow** instead o
   git clone https://github.com/devhid/sob.git
   ```
   
-2. Enter the project directory and create a file `auth.sh` to store credentials/access tokens.
+2. Enter the project directory and edit `auth_setup.sh` to store credentials/access tokens.
   ```
   cd sob
-  echo -e "export SOB_WEBSERVER=''\n\nexport SLACK_CLIENT_ID=''\nexport SLACK_CLIENT_SECRET=''\nexport SLACK_REDIRECT_URI=''\nexport SLACK_STATE=''\n\nexport SO_API_KEY=''\nexport SO_ACCESS_TOKEN=''" > auth.sh
+  chmod 755 auth_setup.sh # Allows the script to be read, edited, and executed (permissions).
   ```
 
-3. Run `auth.sh` and start the server.
+3. Run the auth script and start the server.
   ```
-  chmod 755 auth.sh
-  source auth.sh
+  source auth_setup.sh
   npm run prod
   ```
 ## Features
