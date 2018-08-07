@@ -14,7 +14,7 @@
     },
     "channels": [
         {
-            "name": "general",
+            "name": "generall",
             "tags": [
                 "watson-studio",
                 "dlaas",

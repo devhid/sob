@@ -14,6 +14,7 @@ export class SlackClient {
 
         this.getChannelId(channel, (channelId: any) => {
             if(!channelId) {
+                console.log("Could not find channel: '%s'", channel);
                 return callback(null);
             }
 
@@ -33,6 +34,7 @@ export class SlackClient {
                     return callback(JSON.parse(body));
                 }
 
+                console.log("Error sending message to channel: '%s'", channel);
                 return callback(null);
             });
         });
@@ -47,8 +49,15 @@ export class SlackClient {
                 let channels = JSON.parse(body).channels;
                 let channel = channels.find( (channel: any) => channel.name === channelName);
 
-                return callback('id' in channel ? channel.id : null);
+                if(!channel) {
+                    console.log("Error obtaining channel id of channel: '%s'", channelName);
+                }
+
+                return callback(channel !== undefined && 'id' in channel ? channel.id : null);
             }
+
+            console.log("Error obtaining channel id of channel: '%s'", channelName);
+            return callback(null);
         });
     }
 }

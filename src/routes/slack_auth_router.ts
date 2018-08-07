@@ -37,9 +37,12 @@ export class SlackAuthRouter implements IRouter {
         request(options, (error: any, response: request.Response, body: any) => {
             if(!error && response.statusCode === 200) {
                 this.access_token = JSON.parse(body).access_token;
-
                 this.redirect(this.access_token, res);
+
+                return;
             }
+
+            console.log("Error obtaining access token from client for Slack.");
         });
     }
 
@@ -56,6 +59,8 @@ export class SlackAuthRouter implements IRouter {
                 let team = JSON.parse(body).team.domain;
                 return callback(team);
             }
+
+            console.log("Error obtaining team name.");
         });
     }
 

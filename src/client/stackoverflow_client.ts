@@ -32,6 +32,7 @@ export class StackOverflowClient {
                 return callback(events);
             }
 
+            console.log("Error obtaining recent events from Stack Overflow.");
             return callback(null);
         });
     }

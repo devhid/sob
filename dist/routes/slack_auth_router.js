@@ -30,7 +30,9 @@ class SlackAuthRouter {
             if (!error && response.statusCode === 200) {
                 this.access_token = JSON.parse(body).access_token;
                 this.redirect(this.access_token, res);
+                return;
             }
+            console.log("Error obtaining access token from client for Slack.");
         });
     }
     // Redirect the user to the team slack workspace after authentication succeeds.
@@ -45,6 +47,7 @@ class SlackAuthRouter {
                 let team = JSON.parse(body).team.domain;
                 return callback(team);
             }
+            console.log("Error obtaining team name.");
         });
     }
     init() {

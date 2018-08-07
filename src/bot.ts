@@ -17,9 +17,9 @@ export class Bot {
         this.slackClient = new Slack.SlackClient(slack_access_token);
         this.soClient = new StackOverflow.StackOverflowClient(so_access_token);
 
-        this.loadConfig();
-
-        setInterval(() => this.update(), 1000 * this.config.update_interval);
+        if(this.loadConfig()) {
+            setInterval(() => this.update(), 1000 * this.config.update_interval);
+        }
     }
 
     // Send the message to Slack every x number of seconds (updateInterval).
@@ -77,10 +77,17 @@ export class Bot {
     }
 
     // Loads the configuration object.
-    private loadConfig() : void {
+    private loadConfig() : boolean {
         const config = path.join(__dirname, '..', CONFIG_JSON);
         if(this.config === undefined) {
-            this.config = JSON.parse(fs.readFileSync(config, 'utf-8'));
+            try {
+                this.config = JSON.parse(fs.readFileSync(config, 'utf-8'));
+            } catch(ex) {
+                console.log("Error reading configuration file.");
+                return false;
+            }
         }
+
+        return true;
     }
 }

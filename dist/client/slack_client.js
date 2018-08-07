@@ -12,6 +12,7 @@ class SlackClient {
         let attachments = message.attachments;
         this.getChannelId(channel, (channelId) => {
             if (!channelId) {
+                console.log("Could not find channel: '%s'", channel);
                 return callback(null);
             }
             const options = {
@@ -28,6 +29,7 @@ class SlackClient {
                 if (!error && response.statusCode === 200) {
                     return callback(JSON.parse(body));
                 }
+                console.log("Error sending message to channel: '%s'", channel);
                 return callback(null);
             });
         });
@@ -39,8 +41,13 @@ class SlackClient {
             if (!error && response.statusCode === 200) {
                 let channels = JSON.parse(body).channels;
                 let channel = channels.find((channel) => channel.name === channelName);
-                return callback('id' in channel ? channel.id : null);
+                if (!channel) {
+                    console.log("Error obtaining channel id of channel: '%s'", channelName);
+                }
+                return callback(channel !== undefined && 'id' in channel ? channel.id : null);
             }
+            console.log("Error obtaining channel id of channel: '%s'", channelName);
+            return callback(null);
         });
     }
 }
