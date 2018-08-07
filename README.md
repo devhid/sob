@@ -16,10 +16,29 @@ The bot aims to **encourage users to ask questions to Stack Overflow** instead o
   * :wrench: [Body-Parser](https://github.com/expressjs/body-parser)
   * :globe_with_meridians: [Request](https://github.com/request/request)
   * :trident: [Cheerio](https://cheerio.js.org/)
+  
+## Setup
+1. Clone this repository into your webserver.
+  ```
+  git clone https://github.com/devhid/sob.git
+  ```
+  
+2. Enter the project directory and create a file `auth.sh` to store credentials/access tokens.
+  ```
+  cd sob
+  echo -e "export SOB_WEBSERVER=''\n\nexport SLACK_CLIENT_ID=''\nexport SLACK_CLIENT_SECRET=''\nexport SLACK_REDIRECT_URI=''\nexport SLACK_STATE=''\n\nexport SO_API_KEY=''\nexport SO_ACCESS_TOKEN=''" > auth.sh
+  ```
 
+3. Run `auth.sh` and start the server.
+  ```
+  chmod 755 auth.sh
+  source auth.sh
+  npm run dev
+  ```
 ## Features
- * Specify multiple tags per channel.
+  * Specify multiple tags per channel.
+  * [Future] Mention someone once a question is posted.
 
 ## To-do:
- * Right now, the bot only handles one client. Need to handle multiple connections and store access tokens in some database.
+  * Tag a specific person in slack once a question is posted.
  
