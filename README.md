@@ -23,10 +23,10 @@ The bot aims to **encourage users to ask questions to Stack Overflow** instead o
   git clone https://github.com/devhid/sob.git
   ```
   
-2. Enter the project directory and set the read/write permissions for `auth_setup.sh`.
+2. Enter the project directory and install dependencies.
   ```
   cd sob
-  chmod 755 auth_setup.sh # Allows the script to be read, edited, and executed (permissions).
+  npm install
   ```
 3. Edit `auth_setup.sh` with your favorite text editor.
   ```
@@ -50,14 +50,13 @@ The bot aims to **encourage users to ask questions to Stack Overflow** instead o
   export SO_API_KEY=''
   export SO_ACCESS_TOKEN=''
   ```
-4. Install dependencies.
+4. Set the read/write permissions for `auth_setup.sh` and `run.sh`.
   ```
-  npm install
+  chmod 755 auth_setup.sh run.sh
   ```
-5. Run the auth script and start the server.
+5. Execute `run.sh`. This will execute `auth.sh` and start the server.
   ```
-  source auth_setup.sh
-  npm run prod
+  source run.sh
   ```
 ## Features
   * Specify multiple tags per channel.
