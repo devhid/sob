@@ -15,6 +15,10 @@ class SlackAuthRouter {
             res.redirect(auth.SOB_WEBSERVER);
             return;
         }
+        if (req.query.state !== auth.SLACK_STATE) {
+            res.status(403).redirect(auth.SOB_WEBSERVER + '/forbidden');
+            return;
+        }
         const options = {
             url: 'https://slack.com/api/oauth.access',
             method: 'POST',

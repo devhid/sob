@@ -47,8 +47,8 @@ class SOB {
 
     // Configure API endpoints (routing).
     private routes() : void {
-        this.app.use('/', IndexRouter.router);
         this.app.use('/slack', SlackAuthRouter.router);
+        this.app.use('/', IndexRouter.router);
     }
 
     // Start the server.

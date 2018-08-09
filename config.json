@@ -5,7 +5,7 @@
         "text": "*Question*: <{link}|{title}>",
         "attachments": [
             {
-                "text": "*Excerpt*: {excerpt}\n*Tags*: {tags}",
+                "text": "*Excerpt*: {excerpt}\n*Tags*: {tags}\n*Mention*: <@{mention}>",
                 "footer": "Stack Overflow | {date_posted} UTC",
                 "footer_icon": "https://i.imgur.com/FzHXEPd.png",
                 "mrkdwn_in": ["text"]
@@ -14,24 +14,63 @@
     },
     "channels": [
         {
-            "name": "generall",
+            "name": "general",
             "tags": [
-                "watson-studio",
-                "dlaas",
-                "javascript",
-                "deep-learning",
-                "ibm"
+                {
+                    "tag": "watson-studio",
+                    "mention": true,
+                    "username": "mikeygulati"
+                },
+                {
+                    "tag": "dlaas",
+                    "mention": true,
+                    "username": "mikeygulati"
+                },
+                {
+                    "tag": "javascript",
+                    "mention": true,
+                    "username": "mikeygulati"
+                },
+                {
+                    "tag": "deep-learning",
+                    "mention": true,
+                    "username": "mikeygulati"
+                },
+                {
+                    "tag": "ibm",
+                    "mention": true,
+                    "username": "mikeygulati"
+                }
             ]
         },
-
         {
             "name": "random",
             "tags": [
-                "java",
-                "python",
-                "node.js",
-                "php",
-                "javascript"
+                {
+                    "tag": "java",
+                    "mention": true,
+                    "username": "mikeygulati"
+                },
+                {
+                    "tag": "python",
+                    "mention": true,
+                    "username": "mikeygulati"
+                },
+                {
+                    "tag": "node.js",
+                    "mention": true,
+                    "username": "mikeygulati"
+                },
+                {
+                    "tag": "php",
+                    "mention": true,
+                    "username": "mikeygulati"
+                },
+                {
+                    "tag": "javascript",
+                    "mention": true,
+                    "username": "mikeygulati"
+                }
             ]
         }
     ]

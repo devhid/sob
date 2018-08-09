@@ -34,7 +34,7 @@ export class SlackClient {
                     return callback(JSON.parse(body));
                 }
 
-                console.log("Error sending message to channel: '%s'", channel);
+                console.log("sendMessage(): Unsuccessful HTTP request.");
                 return callback(null);
             });
         });
@@ -47,16 +47,37 @@ export class SlackClient {
         request.get(url, (error: any, response: request.Response, body: any) => {
             if(!error && response.statusCode === 200) {
                 let channels = JSON.parse(body).channels;
-                let channel = channels.find( (channel: any) => channel.name === channelName);
+                let channelObject = channels.find( (channel: any) => channel.name === channelName);
 
-                if(!channel) {
+                if(!channelObject) {
                     console.log("Error obtaining channel id of channel: '%s'", channelName);
                 }
 
-                return callback(channel !== undefined && 'id' in channel ? channel.id : null);
+                return callback(channelObject !== undefined && 'id' in channelObject ? channelObject.id : null);
             }
 
-            console.log("Error obtaining channel id of channel: '%s'", channelName);
+            console.log("getChannelId(): Unsuccessful HTTP request.");
+            return callback(null);
+        });
+    }
+
+    // Gets the user id of a user given their username.
+    public getUserId(username: string, callback: Function) : any {
+        const url = `https://slack.com/api/users.list?token=${this.access_token}`;
+
+        request.get(url, (error: any, response: request.Response, body: any) => {
+            if(!error && response.statusCode === 200) {
+                let members = JSON.parse(body).members;
+                let memberObject = members.find( (member: any) => member.name === username);
+
+                if(!memberObject) {
+                    console.log("Error obtaining member id of member: '%s'", username);
+                }
+
+                return callback(memberObject !== undefined && 'id' in memberObject ? memberObject.id : null);
+            }
+
+            console.log("getUserId(): Unsuccessful HTTP request.");
             return callback(null);
         });
     }

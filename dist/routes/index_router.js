@@ -14,8 +14,16 @@ class IndexRouter {
     getDefault(req, res, next) {
         res.sendFile(path_1.default.join(__dirname, '..', '..', 'public', 'index.html'));
     }
+    get403(req, res, next) {
+        res.sendFile(path_1.default.join(__dirname, '..', '..', 'public', '403.html'));
+    }
+    get404(req, res, next) {
+        res.sendFile(path_1.default.join(__dirname, '..', '..', 'public', '404.html'));
+    }
     init() {
         this.router.get('/', this.getDefault);
+        this.router.get('/forbidden', this.get403);
+        this.router.get('*', this.get404);
     }
 }
 exports.IndexRouter = IndexRouter;

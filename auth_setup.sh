@@ -2,7 +2,7 @@
 export SOB_WEBSERVER=''
 
 # [Important] Since this app is not being distributed (yet?), you will need to create a Slack App
-# and provide your own Client ID, Client Secret, and State (Signing Secret).
+# and provide your own Client ID, Client Secret, and State (Verification Token).
 # [Note] The Redirect URI should be the value for SOB_WEBSERVER with '/slack/auth' at the end.
 
 # Follow the documentation here: https://api.slack.com/slack-apps

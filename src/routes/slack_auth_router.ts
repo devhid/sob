@@ -1,6 +1,7 @@
 /* External Imports */
 import { Request, Response, NextFunction, Router } from 'express';
 import request = require('request');
+import path = require('path');
 
 /* Internal Imports */
 import IRouter from './i_router';
@@ -19,6 +20,11 @@ export class SlackAuthRouter implements IRouter {
     public authorize(req: Request, res: Response, next: NextFunction) : void {
         if(req.query.error === 'access_denied') {
             res.redirect(auth.SOB_WEBSERVER);
+            return;
+        }
+
+        if(req.query.state !== auth.SLACK_STATE) {
+            res.status(403).redirect(auth.SOB_WEBSERVER + '/forbidden');
             return;
         }
 
