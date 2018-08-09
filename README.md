@@ -23,16 +23,40 @@ The bot aims to **encourage users to ask questions to Stack Overflow** instead o
   git clone https://github.com/devhid/sob.git
   ```
   
-2. Enter the project directory and edit `auth_setup.sh` to store credentials/access tokens.
+2. Enter the project directory and install dependencies.
   ```
   cd sob
-  chmod 755 auth_setup.sh # Allows the script to be read, edited, and executed (permissions).
+  npm install
   ```
+3. Edit `auth_setup.sh` with your favorite text editor.
+  ```
+  # URI for your server where the application is being run on. (Example: http://localhost:3000)
+  export SOB_WEBSERVER=''
 
-3. Run the auth script and start the server.
+  # [Important] Since this app is not being distributed (yet?), you will need to create a Slack App
+  # and provide your own Client ID, Client Secret, and State (Signing Secret).
+  # [Note] The Redirect URI should be the value for SOB_WEBSERVER with '/slack/auth' at the end.
+
+  # Follow the documentation here: https://api.slack.com/slack-apps
+  export SLACK_CLIENT_ID=''
+  export SLACK_CLIENT_SECRET=''
+  export SLACK_REDIRECT_URI=`$SOB_WEBSERVER/slack/auth`
+  export SLACK_STATE=''
+
+  # [Important] Since this app is not being distributed (yet?), you will need to create a Stack App
+  # and provide your own API Key and Access Token.
+
+  # Create your application here: https://stackapps.com/apps/oauth/register
+  export SO_API_KEY=''
+  export SO_ACCESS_TOKEN=''
   ```
-  source auth_setup.sh
-  npm run prod
+4. Set the read/write permissions for `auth_setup.sh` and `run.sh`.
+  ```
+  chmod 755 auth_setup.sh run.sh
+  ```
+5. Execute `run.sh`. This will execute `auth.sh` and start the server.
+  ```
+  source run.sh
   ```
 ## Features
   * Specify multiple tags per channel.
