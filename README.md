@@ -2,7 +2,7 @@
 <p align="center">A slack bot that tracks tags from Stack Overflow.</p>
 
 <br>
-<p align="center"><a href="https://slack.com/oauth/authorize?scope=incoming-webhook,team%3Aread,bot,channels%3Aread,chat%3Awrite%3Abot&client_id=382846627254.393789273477"><img alt="Add to Slack" height="54" width="200" src="https://platform.slack-edge.com/img/add_to_slack@2x.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a></p>
+<p align="center"><a href="https://slack.com/oauth/authorize?scope=users%3Aread,incoming-webhook,team%3Aread,bot,channels%3Aread,chat%3Awrite%3Abot&client_id=382846627254.393789273477&state=HBklMAPepNkopjePlumEOZgt"><img alt="Add to Slack" height="54" width="200" src="https://platform.slack-edge.com/img/add_to_slack@2x.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a></p>
 
 
 ## Overview
@@ -60,8 +60,8 @@ The bot aims to **encourage users to ask questions to Stack Overflow** instead o
   ```
 ## Features
   * Specify multiple tags per channel.
-  * [Future] Mention someone once a question is posted.
+  * Mention someone once a question is posted.
 
 ## To-do:
-  * Tag a specific person in slack once a question is posted.
+  * ~Tag a specific person in slack once a question is posted.~
  
