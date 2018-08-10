@@ -18,14 +18,14 @@ The bot aims to **encourage users to ask questions to Stack Overflow** instead o
   * :trident: [Cheerio](https://cheerio.js.org/)
   
 ## Setup
-1. Clone this repository into your webserver.
+1. Clone this repository into your webserver and enter the project directory.
   ```
   git clone https://github.com/devhid/sob.git
+  cd sob
   ```
   
-2. Enter the project directory and install dependencies.
+2. Install dependencies.
   ```
-  cd sob
   npm install
   ```
 3. Edit `auth_setup.sh` with your favorite text editor.
